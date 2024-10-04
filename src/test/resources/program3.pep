@@ -1,5 +1,5 @@
 LDWA 0xFFFF, i
-ADDA 0b01, i 
+ADDA 0x01, i
 ADDA 0x4D, i
 STBA 0xFC16, d
 LDBA 0x06F, i
