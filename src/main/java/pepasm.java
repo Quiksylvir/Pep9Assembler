@@ -22,7 +22,7 @@ public class pepasm {
         removeComments(inputStreamStringBuilder);
         String fileContents = inputStreamStringBuilder.toString();
         fileContents = fileContents.strip();
-        System.out.println("Pep9 Object Code: " + fileContents);
+        System.out.println(fileContents);
     }
 
     private static String convertToObjectCode(Scanner input) {
