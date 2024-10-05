@@ -2,10 +2,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class TestFileCodeOneIsAssembled {
+public class TestPepasm {
 
     @Test
     public void TestAssembleCodeOneIsFetched() throws IOException {
@@ -41,7 +42,7 @@ public class TestFileCodeOneIsAssembled {
 
     @Test
     public void TestAssembleCodeThreeIsFetched() throws IOException {
-        String sampleProgram3 ="LDWA 0xFFFF, i ADDA 0b01, i ADDA 0x4D, i STBA 0xFC16, d LDBA 0x06F, i STBA 0xFC16, d STBA 0xFC16, d LDBA 0x062, i STBA 0xFC16, d ; Are you? STOP .END";
+        String sampleProgram3 ="LDWA 0xFFFF, i ADDA 0x01, i ADDA 0x4D, i STBA 0xFC16, d LDBA 0x06F, i STBA 0xFC16, d STBA 0xFC16, d LDBA 0x062, i STBA 0xFC16, d ; Are you? STOP .END";
         FileInputStream inputStream = new FileInputStream("C:\\Users\\timot\\Desktop\\CS\\CS230 (Architecture)\\Architecture Code SRC\\pepasm\\src\\test\\resources\\program3.pep");
         Scanner scanner = new Scanner(inputStream);
         StringBuilder inputStreamStringBuilder = new StringBuilder();
@@ -70,6 +71,12 @@ public class TestFileCodeOneIsAssembled {
         String fileContents = inputStreamStringBuilder.toString();
         fileContents = fileContents.strip();
         Assertions.assertEquals(sampleProgram4, fileContents);
+    }
+
+    @Test
+    public void testRunMainProgram1() throws FileNotFoundException {
+        String[] args = {"C:\\Users\\timot\\Desktop\\CS\\CS230 (Architecture)\\Architecture Code SRC\\pepasm\\src\\main\\java\\program4.pep"};
+        pepasm.main(args);
     }
 
 }
