@@ -3,10 +3,13 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class pepasm {
+    static int counter = 0;
+    static int funcPosition;
     public static void main(String[] args) throws FileNotFoundException {
         FileInputStream inputStream = new FileInputStream(args[0]);
         Scanner scanner = new Scanner(inputStream);
         StringBuilder inputStreamStringBuilder = new StringBuilder();
+
 
         while (scanner.hasNext()){
             String convertedNext = convertToObjectCode(scanner);
@@ -27,7 +30,8 @@ public class pepasm {
 
     private static String convertToObjectCode(Scanner input) {
         String objectCode = input.next();
-        if (objectCode.equalsIgnoreCase("STOP")){
+
+                if (objectCode.equalsIgnoreCase("STOP")){
             objectCode = "00";
         }
         if (objectCode.equalsIgnoreCase(".END")) {
@@ -74,13 +78,14 @@ public class pepasm {
         if(objectCode.length() == 5){
             objectCode = objectCode.substring(0,2) + " " + objectCode.substring(2, 4) ;
         }
-        if(objectCode.equalsIgnoreCase("next_let:")){
+        if(objectCode.endsWith(":")){
             objectCode = "branchName";
+            funcPosition = counter;
         }
         if(objectCode.equalsIgnoreCase("next_let,")){
-            objectCode = "00 03";
+            objectCode = "00 0" + funcPosition;
         }
-
+        counter++;
         return objectCode;
     }
 

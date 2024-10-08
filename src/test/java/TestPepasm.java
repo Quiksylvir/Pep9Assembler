@@ -74,7 +74,7 @@ public class TestPepasm {
     }
 
     @Test
-    public void testRunMainProgram1() throws FileNotFoundException {
+    public void testRunMainProgram() throws FileNotFoundException {
         String[] args = {"C:\\Users\\timot\\Desktop\\CS\\CS230 (Architecture)\\Architecture Code SRC\\pepasm\\src\\main\\java\\program4.pep"};
         pepasm.main(args);
     }
