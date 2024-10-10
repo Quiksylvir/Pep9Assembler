@@ -15,8 +15,8 @@ public class pepasm {
             String fullLine = scanner.nextLine();
             fullLine = removeComments(fullLine).trim() + " ";
             String[] splitLine = fullLine.split(" ");
-            for (int i = 0; i < splitLine.length; i++) {
-                String convertedNext = convertToObjectCode(splitLine[i]);
+            for (String split : splitLine) {
+                String convertedNext = convertToObjectCode(split);
                 if (convertedNext.equals("branchName") || convertedNext.equals("empty")) {
                     convertedNext = "";
                 } else {
@@ -43,9 +43,11 @@ public class pepasm {
         if (input.startsWith("0x")) {
             input = input.replace("0x","");
             if (input.length() <5) {
-               for (int i = 0; i < 6-input.length(); i++) {
-                   input = "0" + input;
+                StringBuilder inputBuilder = new StringBuilder(input);
+                for (int i = 0; i < 6- inputBuilder.length(); i++) {
+                   inputBuilder.insert(0, "0");
                }
+                input = inputBuilder.toString();
             }
             input = input.substring(0,2) + " " + input.substring(2, 4) ;
         }
