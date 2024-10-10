@@ -78,20 +78,20 @@ public class TestPepasm {
 //        String[] args = {"C:\\Users\\timot\\Desktop\\CS\\CS230 (Architecture)\\Architecture Code SRC\\pepasm\\src\\main\\java\\program1.pep"};
 //        pepasm.main(args);
 //    }
-    @Test
-    public void testRunMainProgram2() throws FileNotFoundException {
-        String[] args = {"C:\\Users\\timot\\Desktop\\CS\\CS230 (Architecture)\\Architecture Code SRC\\pepasm\\src\\main\\java\\program2.pep"};
-        pepasm.main(args);
-    }
+//    @Test
+//    public void testRunMainProgram2() throws FileNotFoundException {
+//        String[] args = {"C:\\Users\\timot\\Desktop\\CS\\CS230 (Architecture)\\Architecture Code SRC\\pepasm\\src\\main\\java\\program2.pep"};
+//        pepasm.main(args);
+//    }
 //    @Test
 //    public void testRunMainProgram3() throws FileNotFoundException {
 //        String[] args = {"C:\\Users\\timot\\Desktop\\CS\\CS230 (Architecture)\\Architecture Code SRC\\pepasm\\src\\main\\java\\program3.pep"};
 //        pepasm.main(args);
 //    }
-//    @Test
-//    public void testRunMainProgram4() throws FileNotFoundException {
-//        String[] args = {"C:\\Users\\timot\\Desktop\\CS\\CS230 (Architecture)\\Architecture Code SRC\\pepasm\\src\\main\\java\\program4.pep"};
-//        pepasm.main(args);
-//    }
+    @Test
+    public void testRunMainProgram4() throws FileNotFoundException {
+        String[] args = {"C:\\Users\\timot\\Desktop\\CS\\CS230 (Architecture)\\Architecture Code SRC\\pepasm\\src\\main\\java\\program4.pep"};
+        pepasm.main(args);
+    }
 
 }

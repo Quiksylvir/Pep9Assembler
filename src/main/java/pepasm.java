@@ -9,83 +9,88 @@ public class pepasm {
         FileInputStream inputStream = new FileInputStream(args[0]);
         Scanner scanner = new Scanner(inputStream);
         StringBuilder inputStreamStringBuilder = new StringBuilder();
-
-        while (scanner.hasNext()){
-            String convertedNext = convertToObjectCode(scanner);
-            if (convertedNext.equalsIgnoreCase("branchName")) {
-                convertedNext = "";
-            } else {
-                inputStreamStringBuilder.append
-                                (convertedNext)
-                        .append(" ");
+        while (scanner.hasNextLine()) {
+            String fullLine = scanner.nextLine();
+            fullLine = removeComments(fullLine).trim() + " ";
+            String[] splitLine = fullLine.split(" ");
+            for (int i = 0; i < splitLine.length; i++) {
+                String convertedNext = convertToObjectCode(splitLine[i]);
+                if (convertedNext.equals("branchName") || convertedNext.equals("empty")) {
+                    convertedNext = "";
+                } else {
+                    inputStreamStringBuilder.append
+                                    (convertedNext)
+                            .append(" ");
+                }
             }
         }
         addInstructionType(inputStreamStringBuilder);
-        removeComments(inputStreamStringBuilder);
         String fileContents = inputStreamStringBuilder.toString();
         fileContents = fileContents.strip();
         System.out.println(fileContents);
     }
 
-    private static String convertToObjectCode(Scanner input) {
-        String objectCode = input.next();
+    private static String convertToObjectCode(String input) {
 
-        if (objectCode.equalsIgnoreCase("STOP")){
-            objectCode = "00";
+        if (input.equalsIgnoreCase("STOP")){
+            input = "00";
         }
-        if (objectCode.equalsIgnoreCase(".END")) {
-            objectCode = "";
+        if (input.equalsIgnoreCase(".END")) {
+            input = "";
         }
-        if (objectCode.startsWith("0x")) {
-            objectCode = objectCode.replace("0x","");
-            if (objectCode.length() <5) {
-               for (int i = 0; i < 6-objectCode.length(); i++) {
-                   objectCode = "0" + objectCode;
+        if (input.startsWith("0x")) {
+            input = input.replace("0x","");
+            if (input.length() <5) {
+               for (int i = 0; i < 6-input.length(); i++) {
+                   input = "0" + input;
                }
             }
         }
-        if (objectCode.equalsIgnoreCase("LDBA")) {
-            objectCode = "D0";
+        if (input.equalsIgnoreCase("LDBA")) {
+            input = "D0";
         }
-        if (objectCode.equalsIgnoreCase("LDWA")) {
-            objectCode = "C0";
+        if (input.equalsIgnoreCase("LDWA")) {
+            input = "C0";
         }
-        if (objectCode.equalsIgnoreCase("STBA")) {
-            objectCode = "F0";
+        if (input.equalsIgnoreCase("STBA")) {
+            input = "F0";
         }
-        if (objectCode.equalsIgnoreCase("STWA")) {
-            objectCode = "E0";
+        if (input.equalsIgnoreCase("STWA")) {
+            input = "E0";
         }
-        if (objectCode.equalsIgnoreCase("ASLA")) {
-            objectCode = "0A";
+        if (input.equalsIgnoreCase("ASLA")) {
+            input = "0A";
         }
-        if (objectCode.equalsIgnoreCase("ASRA")) {
-            objectCode = "0C";
+        if (input.equalsIgnoreCase("ASRA")) {
+            input = "0C";
         }
-        if (objectCode.equalsIgnoreCase("ADDA")) {
-            objectCode = "60";
+        if (input.equalsIgnoreCase("ADDA")) {
+            input = "60";
         }
-        if (objectCode.equalsIgnoreCase("CPBA")) {
-            objectCode = "B0";
+        if (input.equalsIgnoreCase("CPBA")) {
+            input = "B0";
         }
-        if (objectCode.equalsIgnoreCase("ADDA")) {
-            objectCode = "60";
+        if (input.equalsIgnoreCase("ADDA")) {
+            input = "60";
         }
-        if (objectCode.equalsIgnoreCase("BRNE")) {
-            objectCode = "1A";
+        if (input.equalsIgnoreCase("BRNE")) {
+            input = "1A";
         }
-        if(objectCode.length() == 5){
-            objectCode = objectCode.substring(0,2) + " " + objectCode.substring(2, 4) ;
+        if(input.length() == 5){
+            input = input.substring(0,2) + " " + input.substring(2, 4) ;
         }
-        if(objectCode.endsWith(":")){
-            objectCode = "branchName";
+        if(input.endsWith(":")){
+            input = "branchName";
             funcPosition = counter;
         }
-        if(objectCode.equalsIgnoreCase("next_let,")){
-            objectCode = "00 0" + funcPosition;
+        if(input.startsWith("next_let,")){
+            input = "00 0" + funcPosition;
+        }
+        if(input.isEmpty()) {
+            input = "empty";
         }
         counter++;
-        return objectCode;
+        return input;
     }
 
     private static void addInstructionType(StringBuilder inputStreamStringBuilder) {
@@ -107,16 +112,12 @@ public class pepasm {
         }
     }
 
-    private static void removeComments(StringBuilder inputStreamStringBuilder) {
-        for (int i = 0; i < inputStreamStringBuilder.length(); i++) {
-            if (inputStreamStringBuilder.charAt(i) == ';') {
-                int counter = i;
-                while(inputStreamStringBuilder.charAt(counter) != '.' && inputStreamStringBuilder.charAt(counter) != '?') {
-                    counter++;
-                }
-                inputStreamStringBuilder.replace(i-1,counter+1,"");
+    private static String removeComments(String fullLine) {
+        for (int i = 0; i < fullLine.length(); i++) {
+            if (fullLine.charAt(i) == ';') {
+                fullLine = fullLine.substring(0, i);
+            }
         }
-        }
+        return fullLine;
     }
-
 }
