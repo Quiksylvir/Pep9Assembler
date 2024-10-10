@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class pepasm {
     static int counter = 0;
     static int funcPosition = 0;
+    static String recordedFunc = "unused";
     public static void main(String[] args) throws FileNotFoundException {
         FileInputStream inputStream = new FileInputStream(args[0]);
         Scanner scanner = new Scanner(inputStream);
@@ -45,6 +46,7 @@ public class pepasm {
                    input = "0" + input;
                }
             }
+            input = input.substring(0,2) + " " + input.substring(2, 4) ;
         }
         if (input.equalsIgnoreCase("LDBA")) {
             input = "D0";
@@ -76,14 +78,12 @@ public class pepasm {
         if (input.equalsIgnoreCase("BRNE")) {
             input = "1A";
         }
-        if(input.length() == 5){
-            input = input.substring(0,2) + " " + input.substring(2, 4) ;
-        }
         if(input.endsWith(":")){
+            recordedFunc = input.substring(0, input.length()-1);
             input = "branchName";
             funcPosition = counter;
         }
-        if(input.startsWith("next_let,")){
+        if(input.startsWith(recordedFunc)){
             input = "00 0" + funcPosition;
         }
         if(input.isEmpty()) {
