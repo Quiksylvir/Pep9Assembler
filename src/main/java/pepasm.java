@@ -3,10 +3,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class pepasm {
-    static int counter = 0;
+    static int counter;
     static int funcPosition = 0;
     static String recordedFunc = "unused";
     public static void main(String[] args) throws FileNotFoundException {
+        counter = 0;
         FileInputStream inputStream = new FileInputStream(args[0]);
         Scanner scanner = new Scanner(inputStream);
         StringBuilder inputStreamStringBuilder = new StringBuilder();
